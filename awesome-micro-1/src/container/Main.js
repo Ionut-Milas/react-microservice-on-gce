@@ -20,7 +20,7 @@ class Main extends Component {
                     <main>
                         <Switch>
                             <Route path="/" exact component={Home} />
-                            <Route path="/blog" exact component={Blog} />
+                            <Route path="/blog" component={Blog} />
                         </Switch>
                     </main>
                 </div>
