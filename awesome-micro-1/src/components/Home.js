@@ -1,27 +1,32 @@
-import React from "react";
-import {firebaseConnect, isLoaded, isEmpty, populate} from 'react-redux-firebase'
+import React, {Component} from "react";
+import Login from "./Login";
 import {connect} from "react-redux";
-import {compose} from "redux";
+import {firebaseConnect, isEmpty, isLoaded, pathToJS} from "react-redux-firebase";
 
-const Home = () => (
-    <h1>Homepage</h1>
-);
 
-const populates = [
-    { child: 'owner', root: 'users' },
-    // or if you want a param of the populate child such as user's display name
-    // { child: 'owner', root: 'users', childParam: 'displayName' }
-];
+class Home extends Component {
+    render() {
+        const {auth, profile} = this.props;
+        const a = isEmpty(auth) ? "User not logged in": "";
+        const b = isEmpty(auth) ? "": "User data:";
+        const c = isLoaded(auth) && !isEmpty(profile) ? <pre>{JSON.stringify(profile, null, 2)}</pre> : <pre>{JSON.stringify(profile, null, 2)}</pre>;
+        return (
+            <div>
+                <h1>Homepage</h1>
+                <Login/>
+                { a }
+                { b }
+                { c }
+            </div>
+        )
+    }
+}
 
-export default compose(
-    // gather projects and matching owners from firebase and place into redux
-    firebaseConnect([
-        { path: 'users', populates },
-    ]),
-    // projects with owner populated from redux into component props
-    connect(
-        ({ firebase }) => ({
-            projects: populate(firebase, 'users', populates),
-        })
-    )
-)(Home)
+export default connect(
+    // Map state to props
+    ({ firebase: { auth, profile } }) => ({
+        auth,
+        profile
+    })
+)(firebaseConnect()(Home));
+
