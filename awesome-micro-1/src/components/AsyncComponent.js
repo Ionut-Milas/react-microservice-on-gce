@@ -1,15 +1,14 @@
 import React from "react";
 
-const MyLoadingComponent = ({isLoading, error}) => {
+const MyLoadingComponent = (props) => {
     // Handle the loading state
-    if (isLoading) {
+    if (props.error) {
+        return <div>Error!</div>;
+    } else if (props.timedOut) {
+        return <div>Taking a long time...</div>;
+    } else if (props.pastDelay) {
         return <div>Loading...</div>;
-    }
-    // Handle the error state
-    else if (error) {
-        return <div>Sorry, there was a problem loading the page.</div>;
-    }
-    else {
+    } else {
         return null;
     }
 };

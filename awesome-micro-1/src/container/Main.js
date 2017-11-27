@@ -4,14 +4,26 @@ import Loadable from 'react-loadable';
 import logo from './logo.svg';
 import './Main.css';
 import MyLoadingComponent from "../components/AsyncComponent";
+import PrivateRoute from "../components/PrivateRoute";
+import Blog from "../components/Blog";
 
 const AsyncHome = Loadable({
     loader: () => import("../components/Home"),
-    loading: MyLoadingComponent
+    loading: MyLoadingComponent,
+    delay: 300, // 0.3 seconds
+    timeout: 10000 // 10 seconds
 });
 const AsyncBlog = Loadable({
     loader: () => import("../components/Blog"),
-    loading: MyLoadingComponent
+    loading: MyLoadingComponent,
+    delay: 300, // 0.3 seconds
+    timeout: 10000 // 10 seconds
+});
+const AsyncLogin = Loadable({
+    loader: () => import("../components/forms/Login"),
+    loading: MyLoadingComponent,
+    delay: 300, // 0.3 seconds
+    timeout: 10000 // 10 seconds
 });
 const AsyncNotFound = Loadable({
     loader: () => import("../components/NotFound"),
@@ -32,7 +44,10 @@ class Main extends Component {
                     <main>
                         <Switch>
                             <Route path="/" exact component={AsyncHome} />
-                            <Route path="/blog" component={AsyncBlog} />
+                            {/*<Route path="/blog" component={AsyncBlog} />*/}
+                            {/*<PrivateRoute path='/blog' component={AsyncBlog} />*/}
+                            <PrivateRoute path='/blog' component={Blog} />
+                            <Route path='/login' component={AsyncLogin} />
                             <Route component={AsyncNotFound} />
                         </Switch>
                     </main>
