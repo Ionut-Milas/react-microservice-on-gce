@@ -28,7 +28,7 @@
 }
 
 a {
-  padding: 15px;
+  padding: 0;
   color: black;
 }
 
@@ -37,4 +37,11 @@ a {
 }
 .menu {
     float: right;
+}
+
+p {
+    font-size: 10px;
+}
+label {
+    font-style: 14px;
 }

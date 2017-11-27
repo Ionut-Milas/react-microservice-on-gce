@@ -20,8 +20,26 @@ const AsyncBlog = Loadable({
     delay: 300, // 0.3 seconds
     timeout: 10000 // 10 seconds
 });
+const AsyncTerms = Loadable({
+    loader: () => import("../components/TermsAndConditions"),
+    loading: MyLoadingComponent,
+    delay: 300, // 0.3 seconds
+    timeout: 10000 // 10 seconds
+});
+const AsyncPrivacyPolicy = Loadable({
+    loader: () => import("../components/PrivacyPolicy"),
+    loading: MyLoadingComponent,
+    delay: 300, // 0.3 seconds
+    timeout: 10000 // 10 seconds
+});
 const AsyncLogin = Loadable({
-    loader: () => import("../components/Login"),
+    loader: () => import("../components/forms/Login"),
+    loading: MyLoadingComponent,
+    delay: 300, // 0.3 seconds
+    timeout: 10000 // 10 seconds
+});
+const AsyncRegistration = Loadable({
+    loader: () => import("../components/Register"),
     loading: MyLoadingComponent,
     delay: 300, // 0.3 seconds
     timeout: 10000 // 10 seconds
@@ -44,6 +62,9 @@ class Main extends Component {
                             {/*<PrivateRoute path='/blog' component={AsyncBlog} />*/}
                             <PrivateRoute path='/blog' component={AsyncBlog} />
                             <Route path='/login' component={AsyncLogin} />
+                            <Route path='/register' component={AsyncRegistration} />
+                            <Route path='/terms-and-conditions' component={AsyncTerms} />
+                            <Route path='/privacy-policy' component={AsyncPrivacyPolicy} />
                             <Route component={AsyncNotFound} />
                         </Switch>
                     </main>

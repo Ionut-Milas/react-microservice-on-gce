@@ -11,7 +11,7 @@ class Login extends React.Component {
     render() {
         const { auth } = this.props;
         let from = "/"
-        if (typeof this.props.location !== "undefined") {
+        if (typeof this.props.location !== "undefined" && typeof this.props.location.state !== "undefined") {
             from = this.props.location.state.from;
         }
         if (!isEmpty(auth) === true) {
