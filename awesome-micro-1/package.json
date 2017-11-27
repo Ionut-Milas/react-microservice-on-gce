@@ -6,6 +6,7 @@
     "axios": "^0.17.1",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
+    "react-loadable": "^5.3.1",
     "react-redux": "^5.0.6",
     "react-redux-firebase": "next",
     "react-router-dom": "^4.2.2",
@@ -17,8 +18,8 @@
     "universal-cookie": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "sh -ac '.env.${REACT_APP_ENV}; react-scripts start'",
+    "build": "sh -ac '.env.${REACT_APP_ENV}; react-scripts build'",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
