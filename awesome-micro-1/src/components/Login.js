@@ -3,13 +3,31 @@ import PropTypes from 'prop-types'
 import {connect} from "react-redux";
 import {firebaseConnect, isEmpty, isLoaded, pathToJS} from "react-redux-firebase";
 
-const SomeComponent = (props) => (
-    // use props.firebase
-    <div>
-        <button disabled={!isEmpty(props.auth)} onClick={()=>login(props.firebase)}>Login</button>
-        <button disabled={isEmpty(props.auth)} onClick={()=>logout(props.firebase)}>Logout</button>
-    </div>
-);
+class Login extends React.Component {
+    constructor() {
+        super();
+    }
+
+    render() {
+        const { auth } = this.props;
+        let from = "/"
+        if (typeof this.props.location !== "undefined") {
+            from = this.props.location.state.from;
+        }
+        if (!isEmpty(auth) === true) {
+            if (typeof this.props.history !== "undefined"){
+                this.props.history.replace(from);
+            }
+        }
+
+        return (
+            <div>
+                <p>You must log in to view the page</p>
+                <button disabled={!isEmpty(this.props.auth)} onClick={() => login(this.props.firebase)}>Login</button>
+            </div>
+        )
+    }
+}
 
 // Works same with class components (make sure you import Component from react)
 // class SomeComponent extends Component {
@@ -19,20 +37,15 @@ const SomeComponent = (props) => (
 // }
 export default connect(
     // Map state to props
-    ({ firebase: { auth, profile } }) => ({
+    ({firebase: {auth, profile}}) => ({
         auth,
         profile
     })
-)(firebaseConnect()(SomeComponent));
+)(firebaseConnect()(Login));
 
 function login(fr) {
     fr.login({
         email: 'milasionut@yahoo.com',
         password: 'qazwsx'
     })
-}
-function logout(fr) {
-    // const userRef = new fr('https://gleaming-idiom-167311.firebaseio.com/presence/' + fr.User);
-    fr.logout();
-    fr.ref('presence/' + fr.auth().currentUser.uid).set(false);
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
 const Blog = () => (
-    <h1>Blog posts</h1>
+    <h1>Page with smth</h1>
 );
 
 export default Blog;

@@ -21,7 +21,7 @@ const AsyncBlog = Loadable({
     timeout: 10000 // 10 seconds
 });
 const AsyncLogin = Loadable({
-    loader: () => import("../components/forms/Login"),
+    loader: () => import("../components/Login"),
     loading: MyLoadingComponent,
     delay: 300, // 0.3 seconds
     timeout: 10000 // 10 seconds
@@ -39,7 +39,7 @@ class Main extends Component {
                 <div className="App-intro">
                     <main>
                         <Switch>
-                            <Route path="/" exact component={AsyncHome} />
+                            <PrivateRoute path="/" exact component={AsyncHome} />
                             {/*<Route path="/blog" component={AsyncBlog} />*/}
                             {/*<PrivateRoute path='/blog' component={AsyncBlog} />*/}
                             <PrivateRoute path='/blog' component={AsyncBlog} />
