@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Link, Route, Switch} from 'react-router-dom'
 import Loadable from 'react-loadable';
-import logo from './logo.svg';
 import './Main.css';
 import MyLoadingComponent from "../components/AsyncComponent";
 import PrivateRoute from "../components/PrivateRoute";
-import Blog from "../components/Blog";
+import Header from "../components/Header";
+import {connect} from "react-redux";
+import {firebaseConnect} from "react-redux-firebase";
 
 const AsyncHome = Loadable({
     loader: () => import("../components/Home"),
@@ -34,19 +35,14 @@ class Main extends Component {
     render() {
         return (
             <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Welcome to Awesome Microservice Blog</h1>
-                    <Link to="/">Home</Link>
-                    <Link to="/blog">Blog</Link>
-                </header>
+                <Header auth={this.props.auth} profile={this.props.profile}/>
                 <div className="App-intro">
                     <main>
                         <Switch>
                             <Route path="/" exact component={AsyncHome} />
                             {/*<Route path="/blog" component={AsyncBlog} />*/}
                             {/*<PrivateRoute path='/blog' component={AsyncBlog} />*/}
-                            <PrivateRoute path='/blog' component={Blog} />
+                            <PrivateRoute path='/blog' component={AsyncBlog} />
                             <Route path='/login' component={AsyncLogin} />
                             <Route component={AsyncNotFound} />
                         </Switch>
@@ -57,4 +53,11 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default connect(
+    // Map state to props
+    ({ firebase: { auth, profile } }) => ({
+        auth,
+        profile
+    })
+)(firebaseConnect()(Main));
+
